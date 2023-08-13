@@ -1,7 +1,10 @@
 #include <iostream>
 using namespace std; 
-
-
+#include <string> 
+#include <iomanip> 
+#include <windows.h> 
+#define color SetConsoleTextAttribute //Para poner color a la vida
+const int DIM = 8; 
 typedef struct 
 {
     string name;
@@ -13,11 +16,25 @@ typedef struct
 
 }tPlaneta;
 
-//Prototipos de funciones 
+typedef struct 
+{
+    tPlaneta lista[DIM];
+    int contador; 
+}tLista;
+
+
+//Prototipos
+//Funcion de saludo inicial
+void saludo();
+//Funcion que muestra el menu 
+int menu();
 //Funcion para ingresar datos a los planetas
 void leerPlaneta (tPlaneta & planeta);
+//Funcion para imprimir
 void imprimir (tPlaneta &Planeta);
 
+
+/*************************************************************************************************/
 int main ()
 { 
 
@@ -29,6 +46,8 @@ imprimir (planeta1);
 
 return 0; 
 }
+/*************************************************************************************************/
+
 
 void leerPlaneta (tPlaneta & planeta) 
 {
@@ -57,5 +76,20 @@ cout << "La composicion atmosferica del planeta es: " << Planeta.composicion_atm
 cout << "La distancia al sol del planeta es: " << Planeta.distancia_sol << endl;
 cout << "Las estrellas del planeta son: " << Planeta.estrellas << endl;
 
+}
+
+int menu()
+{
+
+}
+
+void saludo()
+{
+    HANDLE hConsole = GetStdHandle( STD_OUTPUT_HANDLE ); //Para el color
+    string name; 
+    cout << "Escriba su nombre: " << endl;
+    cin >> name; 
+     color(hConsole, 1); 
+    cout << "Bienbenido al Sistema Solar"
 }
 
