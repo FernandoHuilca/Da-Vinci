@@ -97,19 +97,23 @@ int menu(){
     }while((opcion < 0 ) || (opcion >4));
     return opcion;
 }
-void cargar(tLista &lista, bool &ok){
-    tEstudiante estudiante;
-    ifstream archivo;
-    char aux;
-    lista.contador = 0;
-    archivo.open("clase.txt");
+void cargar(tLista &lista, bool &ok)/*Resive una variable lista (obvio porque necesitaremos 
+guardar en el arreglo y el contador) tambien resive un boleano para 
+de no cargar solo presentar el error y detener el programa*/
+{
+    tEstudiante estudiante;// Lo usaremos para en el guardar todos los datos y una vez que finalicemos de recolectar es cuando lo agregamos a la lista de estudiantes y aunmentamos el contador porque si lo hacemos directamente puede generar problemas al futuro 
+    ifstream archivo;//para leer del archivo
+    char aux; // usar porque en otros lenjuages no funciona el cin.ignore o cin .syn 
+    lista.contador = 0; // Inicializa el contador porque lo usaremos
+    archivo.open("clase.txt"); // lo abre y verifica
     if (!archivo.is_open()){
-        ok = false;
+        ok = false; //Para detener pero en el programa del main
     }
     else{
         ok = true;
-        getline(archivo, estudiante.nombre);
-        while((estudiante.nombre != "XXX") && (lista.contador < MAX)){
+        getline(archivo, estudiante.nombre); //Usa al tipo estudiante 
+        while((estudiante.nombre != "XXX") && (lista.contador < MAX))//Controlar que el contador no haya llegado al maximo no olvidar de ello 
+        {
             getline(archivo, estudiante.apellido);
             archivo >> estudiante.edad;
             archivo >> estudiante.nif;

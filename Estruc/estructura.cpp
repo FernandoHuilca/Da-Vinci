@@ -2,8 +2,10 @@
 using namespace std; 
 #include <string> 
 #include <iomanip> 
+#include <fstream>
 #include <windows.h> 
 #define color SetConsoleTextAttribute //Para poner color a la vida
+HANDLE hConsole = GetStdHandle( STD_OUTPUT_HANDLE ); //Para el color
 const int DIM = 8; 
 typedef struct 
 {
@@ -37,7 +39,9 @@ void imprimir (tPlaneta &Planeta);
 /*************************************************************************************************/
 int main ()
 { 
-
+int opcion; 
+saludo(); 
+opcion = menu();
 tPlaneta planeta1, planeta2; 
 
 leerPlaneta(planeta1);
@@ -49,47 +53,65 @@ return 0;
 /*************************************************************************************************/
 
 
-void leerPlaneta (tPlaneta & planeta) 
+void saludo()
 {
-cout << "Escriba el nombre del planeta: "  ;
-cin >> planeta.name; 
-cout << "Escriba la gravedad que tiene el planeta: " ;
-cin >> planeta.gravity;  
-cout << "Escriba el tamanio del planeta: " ;
-cin >> planeta.tamanio;
-cin.ignore();
-cout << "Escriba la composicion atmosferica del planeta: " ;
-getline (cin, planeta.composicion_atmosferica);    
-cout << "Escriba la distancia al sol del planeta: " ;
-cin >> planeta.distancia_sol;    
-cout << "Escriba las estrellas del planeta: " ;
-cin >> planeta.estrellas;    
-
-}
-
-void imprimir (tPlaneta &Planeta)
-{
-cout << "El nombre del planeta es: " << Planeta.name << endl;
-cout << "La gravedad del planeta es: " << Planeta.gravity << endl;
-cout << "El tamanio del planeta es: " << Planeta.tamanio << endl;
-cout << "La composicion atmosferica del planeta es: " << Planeta.composicion_atmosferica << endl;  
-cout << "La distancia al sol del planeta es: " << Planeta.distancia_sol << endl;
-cout << "Las estrellas del planeta son: " << Planeta.estrellas << endl;
-
+    string name; 
+    cout << "Escriba su nombre: ";
+    getline(cin, name);
+    color(hConsole, 13); 
+    cout << "____Bienbenido al Sistema Solar " << name  << "____" << endl;
+     color(hConsole, 7); 
+    cout << endl;
 }
 
 int menu()
-{
+{   
+    int op; 
+    do
+    {
+    cout  << "MENU EJERCICIOS REALIZADOS" << endl;
+        cout << "-------------------------" << endl;
+        cout << endl;
+        cout << "1. Mostrar lista de planetas" << endl;
+        cout << "2. Mostrar datos del planeta" << endl;
+        cout << "3. Modificar un planeta" << endl;
+        cout << "4. Borrar un planeta" << endl;
+        cout << "5. Aniadir un nuevo planeta" << endl;
+        cout << "0. Salir" << endl;
+        cout << endl;
+        cout << "Ingrese una opcion: ";
+        cin >> op;
+        if (op < 0 || op > 5)
+        {
+            
+            color(hConsole, 4);
+            cout << "ERROR: " << endl;
+            color(hConsole, 7);
+            cout << "Por favor digite un numero de las opciones " << endl << endl;
+        }
+            
+    } while (op < 0 || op > 4);
 
+    return op; 
+    
 }
 
-void saludo()
+void cargar (bool &ok)
 {
-    HANDLE hConsole = GetStdHandle( STD_OUTPUT_HANDLE ); //Para el color
-    string name; 
-    cout << "Escriba su nombre: " << endl;
-    cin >> name; 
-     color(hConsole, 1); 
-    cout << "Bienbenido al Sistema Solar"
+    ifstream leer_archivo; 
+    leer_archivo.open("planetas.txt"); 
+    if (!leer_archivo.is_open())
+        ok = false; 
+    else
+    {
+        ok = true; //No hace falta pero pa estar seguros
+        while (leer_archivo != "xxx")
+        {
+            /* code */
+        }
+        
+    }
+    
 }
+
 
