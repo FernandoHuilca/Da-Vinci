@@ -1,0 +1,3 @@
+﻿  Ball_Robot.cpp
+C:\Users\elice\Documents\Da-Vinci\Robot 1.1\Ball_Robot\Ball_Robot\rlutil.h(578,20): warning C4267: 'inicializando': conversión de 'size_t' a 'unsigned int'; posible pérdida de datos
+  Ball_Robot.vcxproj -> C:\Users\elice\Documents\Da-Vinci\Robot 1.1\Ball_Robot\x64\Debug\Ball_Robot.exe
