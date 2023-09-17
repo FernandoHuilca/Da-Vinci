@@ -5,6 +5,7 @@
 using namespace std;
 #include <chrono>
 #include <thread>
+#define color SetConsoleTextAttribute
 
 //Funciones externas:
 
@@ -28,14 +29,36 @@ void animacion_de_carga();
 void dibujo_estrellas_derecha();
 //Dibuja un hexagono al rededor del menu principal
 void dibujo_hexagono();
+//Dibuja el contorno de la pantalla principal 
+void contorno_principal();
+//Dibujo superior izquierdo una barra inclinada
+void dibujo_superior_izquierdo();
+
+
+void dibujo_inferior_derecho();
+
+
+void dibujo_superior_derecho();
+void linea_derecha();
+
+void linea_inferor();
+
+void dibujo_inferior_izquierdo();
+
+void triangulo();
+
+
 
 /*************************** INICIO DEL MAIN ***************************************/
 int main()
 {
     creador_Fer();
     animacion_de_carga();
-    dibujo_estrellas();
-    dibujo_estrellas_derecha();
+    //dibujo_estrellas();
+    //dibujo_estrellas_derecha();
+    //dibujo_robot();
+    contorno_principal();
+    dibujo_cuadrado();
 
     switch (menu_principal())
     {
@@ -102,7 +125,7 @@ int menu_principal()
     creador_Fer();
     int key; //almacenar el valor de cada tecla tecleada xd 
     int subir_bajar = 0; //para controlar la flecha que aplaste y devolver donde esta el cursor 
-    int Columna = 52; //MODIFICAR LA COLUMNA EN LA QUE APARECEN 
+    int Columna = 25; //MODIFICAR LA COLUMNA EN LA QUE APARECEN 
     int FILA = 12; //MODIFICAR LA FILA EN LA QUE APARECEN 
 
     while (true)
@@ -111,7 +134,6 @@ int menu_principal()
         rlutil::setColor(rlutil::COLOR::WHITE); //Le da color a las letras 
 
         //Dibujar_contorno(Nombre_Del_Usuario);
-        dibujo_hexagono();
         ColorSeleccion("____________________", Columna, FILA, subir_bajar == 7);
         ColorSeleccion("  SALUDAR            ", Columna, FILA + 1, subir_bajar == 0);
         ColorSeleccion("  BAILAR             ", Columna, FILA + 2, subir_bajar == 1);
@@ -165,8 +187,8 @@ int menu_principal()
 
 void dibujo_cuadrado()
 {
-    int columna = 43, fila = 10;
-    int largo = columna + 37, ancho = fila + 10;
+    int columna = 14, fila = 8;
+    int largo = columna + 40, ancho = fila + 15;
     // Línea superior
     rlutil::locate(columna - 1, fila);
     cout << (char)218;
@@ -242,30 +264,33 @@ void dibujo_estrellas()
 
 void dibujo_robot()
 {
+    int columna = 75, fila = 13;
     rlutil::setColor(rlutil::COLOR::LIGHTBLUE); //Le da color a las letras 
-    rlutil::locate(55, 2);
+    rlutil::locate(columna, fila);
     cout << "         __" << endl;
-    rlutil::locate(55, 3);
+    rlutil::locate(columna, fila+1);
     cout << " _ (\\    |@@|" << endl;
-    rlutil::locate(55, 4);
+    rlutil::locate(columna, fila+2);
     cout << "(__/\\__ \\--/ __" << endl;
-    rlutil::locate(55, 5);
+    rlutil::locate(columna, fila+3);
     cout << "    \\___|----|  |   __" << endl;
-    rlutil::locate(55, 6);
+    rlutil::locate(columna, fila+4);
     cout << "        \\ }{ /\\ )_ / _\\" << endl;
-    rlutil::locate(55, 7);
+    rlutil::locate(columna, fila+5);
     cout << "        /\\__/\u005C\\__O (__" << endl;
-    rlutil::locate(55, 8);
+    rlutil::locate(columna, fila+6);
     cout << "       (--/\u005C--)    \\__/" << endl;
-    rlutil::locate(55, 9);
+    rlutil::locate(columna, fila+7);
     cout << "       _)(  )(_" << endl;
-    rlutil::locate(55, 10);
+    rlutil::locate(columna, fila+8);
     cout << "      `---''---`" << endl;
 
 }
 
 void animacion_de_carga()
 {
+    int a = 0; 
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     rlutil::locate(42, 12);
         cout << "Realizando carga en pantalla..." << endl;
 
@@ -276,11 +301,18 @@ void animacion_de_carga()
 
         for (int i = 0; i < numFrames; ++i) 
         {
+            
             rlutil::locate(52, 14);
+            color(hConsole, a);
+            a++;
             cout << "Cargando " << frames[i % 4] << "\r";
             cout.flush();
 
             this_thread::sleep_for(chrono::milliseconds(frameDelayMs));
+            if (a == 15 )
+            {
+                a = 0;
+            }
         }
         system("cls");
 }
@@ -380,4 +412,333 @@ void dibujo_hexagono()
         aux++;
     }
 
+}
+
+
+void contorno_principal()
+{
+    //Linea superior
+    for (int i = 5; i <= 39; i++)
+    {
+        rlutil::locate(i, 4);
+        cout << (char)95;
+
+    }
+    for (int i = 0; i < 2; i++)
+    {
+        rlutil::locate(40+i, 4-i);
+        cout << (char)47;
+    }
+    for (int i = 4; i <= 38; i++)
+    {
+        rlutil::locate(i+38, 2);
+        cout << (char)95;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(77 + i, 3 + i);
+        cout << (char)92;
+    }
+
+    for (int i = 4; i <= 41; i++)
+    {
+        rlutil::locate(i+78, 7);
+        cout << (char)95;
+    }
+    for (int i = 4; i <= 38; i++)
+    {
+        rlutil::locate(i + 38, 4);
+        cout << (char)95;
+    }
+
+    for (int i = 5; i <= 37; i++)
+    {
+        rlutil::locate(i + 38, 3);
+        cout << (char)95;
+    }
+    rlutil::locate(42, 4);
+    cout << (char)47;
+    rlutil::locate(76, 4);
+    cout << (char)92;
+    //Dibujos superior derecha
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(79 + i, 3 + i);
+        cout << (char)92;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(83 + i, 6);
+        cout << (char)95;
+    }
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(84 + i, 3 + i);
+        cout << (char)92;
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(79 + i, 2);
+        cout << (char)95;
+    }
+    //Dibujos superior derecha 2
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(86 + i, 3 + i);
+        cout << (char)92;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(90 + i, 6);
+        cout << (char)95;
+    }
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(91 + i, 3 + i);
+        cout << (char)92;
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(86 + i, 2);
+        cout << (char)95;
+    }
+    //Dibujos superior derecha 3
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(93 + i, 3 + i);
+        cout << (char)92;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(97 + i, 6);
+        cout << (char)95;
+    }
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(98 + i, 3 + i);
+        cout << (char)92;
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(93 + i, 2);
+        cout << (char)95;
+    }
+    //Dibujos superior derecha 4
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(100 + i, 3 + i);
+        cout << (char)92;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(104 + i, 6);
+        cout << (char)95;
+    }
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(105 + i, 3 + i);
+        cout << (char)92;
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(100 + i, 2);
+        cout << (char)95;
+    }
+    //Dibujos superior derecha 4
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(107 + i, 3 + i);
+        cout << (char)92;
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(111 + i, 6);
+        cout << (char)95;
+    }
+    for (int i = 0; i < 4; i++)
+    {
+        rlutil::locate(112 + i, 3 + i);
+        cout << (char)92;
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        rlutil::locate(107 + i, 2);
+        cout << (char)95;
+    }
+
+    //Dibujo superior Izquierdo
+    dibujo_superior_izquierdo();
+    dibujo_inferior_derecho();
+    //barra derecha
+    for (int i = 0; i < 13; i++)
+    {
+        rlutil::locate(120, 8+i);
+        cout << "|";
+    }
+    for (int i = 0; i < 7; i++)
+    {
+        rlutil::locate(117, 23 + i);
+        cout << "|";
+    }
+    for (int i = 0; i < 3; i++)
+    {
+        rlutil::locate(117 + i, 23 - i);
+        cout << (char)47;
+    }
+    linea_derecha();
+
+}
+
+
+void dibujo_superior_izquierdo()
+{
+    int fila = 2, columna = 5; 
+    rlutil::locate(columna, fila);
+    cout << "   ________________________________";
+    rlutil::locate(columna, fila+1);
+    cout << "  /_______________________________/";
+
+}
+
+void dibujo_inferior_derecho()
+{
+    int fila = 22, columna = 115;
+    rlutil::locate(columna, fila-1);
+    cout << "     .";
+    rlutil::locate(columna, fila);
+    cout << "    /|";
+    rlutil::locate(columna, fila + 1);
+    cout << "   / |";
+    rlutil::locate(columna, fila + 2);
+    cout << "   | |";
+    rlutil::locate(columna, fila + 3);
+    cout << "   | |";
+    rlutil::locate(columna, fila + 4);
+    cout << "   | |";
+    rlutil::locate(columna, fila + 5);
+    cout << "   | |";
+    rlutil::locate(columna, fila + 6);
+    cout << "   | |";
+    rlutil::locate(columna, fila + 7);
+    cout << "   |_|";
+    linea_inferor();
+}
+void linea_inferor()
+{
+
+    for (int i = 0; i < 48; i++)
+    {
+        rlutil::locate(5+i, 27);
+        cout << (char)95;
+    }
+
+    for (int i = 0; i < 62; i++)
+    {
+        rlutil::locate(55 + i, 29);
+        cout << (char)95;
+    }
+    rlutil::locate(53, 28);
+    cout << (char)92;
+    rlutil::locate(54, 29);
+    cout << (char)92;
+    dibujo_superior_derecho();
+
+}
+
+void dibujo_superior_derecho()
+{
+    int fila = 28, columna = 5;
+    rlutil::locate(columna, fila);
+    cout << "  _____________________________________________";
+    rlutil::locate(columna, fila + 1);
+    cout << "  \\____________________________________________\\";
+
+}
+
+void linea_derecha()
+{
+    for (int i = 0; i < 6; i++)
+    {
+        rlutil::locate(2, 7+i);
+        cout << "|";
+    }
+    for (int i = 0; i < 6; i++)
+    {
+        rlutil::locate(4, 15 + i);
+        cout << " |";
+    }
+    for (int i = 0; i < 2; i++)
+    {
+        rlutil::locate(2, 23 + i);
+        cout << "|";
+    }
+    rlutil::locate(3, 25);
+    cout << (char)92;
+    rlutil::locate(4, 26);
+    cout << (char)92;
+    rlutil::locate(5, 27);
+    cout << (char)92;
+    /**************/
+    rlutil::locate(3, 13);
+    cout << (char)92;
+    rlutil::locate(4, 14);
+    cout << (char)92;
+    /*************/
+    rlutil::locate(3, 22);
+    cout << (char)47;
+    rlutil::locate(4, 21);
+    cout << (char)47;
+    /**************/
+
+    rlutil::locate(4, 5);
+    cout << (char)47;
+    rlutil::locate(3, 6);
+    cout << (char)47;
+    dibujo_inferior_izquierdo();
+}
+
+void dibujo_inferior_izquierdo()
+{
+    int fila = 14, columna = 2;
+    rlutil::locate(columna, fila-1);
+    cout << ".";
+    rlutil::locate(columna, fila);
+    cout << "|\\";
+    rlutil::locate(columna, fila+1);
+    cout << "| \\";
+    rlutil::locate(columna, fila + 2);
+    cout << "| |";
+    rlutil::locate(columna, fila + 3);
+    cout << "| |";
+    rlutil::locate(columna, fila + 4);
+    cout << "| |";
+    rlutil::locate(columna, fila + 5);
+    cout << "| |";
+    rlutil::locate(columna, fila + 6);
+    cout << "| /";
+    rlutil::locate(columna, fila + 7);
+    cout << "|/";
+    rlutil::locate(columna, fila + 8);
+    cout << "'";
+    triangulo();
+}
+
+void triangulo()
+{
+    int columna = 2, fila = 26; 
+    rlutil::locate(columna, fila-1);
+    cout << ".";
+    rlutil::locate(columna, fila);
+    cout << "|\\";
+    rlutil::locate(columna, fila+1);
+    cout << "| \\";
+    rlutil::locate(columna, fila+2);
+    cout << "|  \\";
+    rlutil::locate(columna, fila+3);
+    cout << "|___\\";
 }
